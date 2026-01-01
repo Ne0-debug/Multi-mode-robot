@@ -1,0 +1,222 @@
+# Project Report  
+## Multi-Mode Arduino Robot
+
+---
+
+## 1. Introduction
+
+Robotics combines electronics, mechanics, and software to build intelligent machines capable of interacting with their environment. This project, **Multi-Mode Arduino Robot Controller**, focuses on designing and implementing a versatile mobile robot capable of operating in multiple modes such as manual control, line following, obstacle avoidance, hybrid navigation, trigger-based motion, gyro-stabilized driving, record/playback, and voice control.
+
+The primary objective is to build a **single robotic platform** that can switch between different behaviors dynamically using serial or Bluetooth commands, making it suitable for learning, experimentation, and competition-level applications.
+
+---
+
+## 2. Objectives
+
+The main objectives of this project are:
+
+- To design a multi-functional robot using Arduino  
+- To implement multiple autonomous and semi-autonomous modes  
+- To integrate sensors for environment perception  
+- To achieve stable motion using gyroscopic correction  
+- To enable wireless and voice-based control  
+- To ensure modular, expandable, and reusable code  
+
+---
+
+## 3. System Overview
+
+The robot uses a **2-wheel differential drive system** controlled by a motor driver. Sensors provide real-time feedback, while different software modes determine the robot’s behavior. Commands are sent through USB serial or Bluetooth (HC-05).
+
+### System Capabilities:
+- Manual and autonomous navigation  
+- Sensor-based decision making  
+- Gyro-based motion stabilization  
+- Wireless and voice interaction  
+
+---
+
+## 4. Hardware Components
+
+### 4.1 Microcontroller
+- **Arduino Uno / Nano**
+- Acts as the central control unit
+- Handles sensor data, motor control, and communication
+
+### 4.2 Motor Driver
+- **L298N Dual H-Bridge**
+- Drives two DC motors
+- Allows forward, reverse, and turning motions
+
+### 4.3 Motors
+- 2 × BO motors
+- wheels and chassis
+
+### 4.4 Sensors
+- **MPU6050 Gyroscope** – yaw angle for gyro-stabilized driving  
+- **HC-SR04 Ultrasonic Sensor** – distance measurement  
+- **IR Line Sensors (2x)** – line detection  
+
+### 4.5 Communication Module
+- **HC-05 Bluetooth Module**
+- Enables wireless control and voice command input
+
+### 4.6 Actuators
+- **Servo Motor (Scanner)** – ultrasonic direction scanning  
+- **Servo Motor (Claw)** – object gripping  
+- **Buzzer** – audio feedback  
+
+### 4.7 Power System
+- External Li-ion / LiPo battery  
+- **Buck Converter** for stable 5V supply  
+- **Prototype Shield with Breadboard** for clean wiring  
+
+---
+
+## 5. Software Design
+
+The software is written in **Arduino C/C++** and is structured into modular functions for readability and scalability.
+
+### 5.1 Libraries Used
+- `Servo`
+- `Wire`
+- `MPU6050_light`
+
+### 5.2 Operating Modes
+
+#### Manual Mode (`M`)
+- Direct user control via serial or Bluetooth
+- Commands: Forward, Backward, Left, Right, Stop
+
+#### Line Follower Mode (`X`)
+- Uses two IR sensors
+- Adjusts motor direction based on line detection
+
+#### Obstacle Avoidance Mode (`O`)
+- Uses ultrasonic sensor and scanning servo
+- Chooses path with maximum clearance
+
+#### Hybrid Mode (`H`)
+- Moves forward normally
+- Switches to avoidance when obstacle detected
+
+#### Trigger Mode (`T`)
+- Motion depends on distance range
+- Forward, backward, or stop based on object proximity
+
+#### Gyro Mode (`Y`)
+- Uses MPU6050 yaw data
+- Maintains straight movement with correction
+
+#### Record & Play Mode
+- Records manual commands with time duration
+- Replays the path autonomously
+
+#### Voice Control
+- Google Speech-to-Text via mobile app
+- Commands sent as serial characters over Bluetooth
+
+---
+
+## 6. Pin Configuration Summary
+
+### Motors
+| Function | Pin |
+|--------|-----|
+| Left Enable | D5 |
+| Right Enable | D6 |
+| Left IN1 | D8 |
+| Left IN2 | D9 |
+| Right IN1 | D10 |
+| Right IN2 | D11 |
+
+### Sensors
+| Sensor | Pin |
+|------|-----|
+| IR Left | A2 |
+| IR Right | A3 |
+| Ultrasonic Trigger | A0 |
+| Ultrasonic Echo | A1 |
+
+### MPU6050 (I²C)
+| MPU6050 Pin | Arduino |
+|------------|---------|
+| VCC | 5V / 3.3V |
+| GND | GND |
+| SDA | A4 |
+| SCL | A5 |
+| AD0 | GND |
+
+### Others
+| Component | Pin |
+|----------|-----|
+| Claw Servo | D4 |
+| Scan Servo | D3 |
+| Buzzer | D12 |
+| HC-05 TX/RX | D0 / D1 |
+
+---
+
+## 7. Parameter Tuning
+
+The following parameters must be tuned based on hardware and environment:
+
+- **Motor RPM** – higher RPM requires lower speed values  
+- **Robot Mass** – heavier robots need more torque and delay  
+- **Battery Voltage** – higher voltage increases motor speed  
+- **Surface Friction & Sensor Placement** – affects correction strength  
+
+---
+
+## 8. Testing and Results
+
+Each mode was tested individually:
+
+- Manual control was responsive and stable  
+- Line follower worked reliably on high-contrast tracks  
+- Obstacle avoidance successfully detected and avoided objects  
+- Gyro mode significantly reduced drift  
+- Voice commands worked reliably in low-noise environments  
+
+The robot performed consistently across different modes with smooth transitions.
+
+---
+
+## 9. Applications
+
+- Educational robotics projects  
+- Robotics competitions  
+- Autonomous navigation research  
+- Voice-controlled robotic systems  
+- Sensor integration learning platform  
+
+---
+
+## 10. Limitations
+
+- Voice control depends on mobile app accuracy  
+- Ultrasonic sensor affected by soft or angled surfaces  
+- Bluetooth range limited to HC-05 specifications  
+- No closed-loop speed control using encoders  
+
+---
+
+## 11. Future Enhancements
+
+- Add wheel encoders for precise motion control  
+- Implement PID control for motors  
+- Upgrade to ESP32 for Wi-Fi and BLE  
+- Add camera-based vision  
+- Implement mobile app with GUI  
+
+---
+
+## 12. Conclusion
+
+The **Multi-Mode Arduino Robot Controller** successfully demonstrates how a single robotic platform can support multiple navigation and control strategies. By integrating sensors, wireless communication, and modular software design, the project provides a strong foundation for advanced robotics development and learning.
+
+---
+
+## 13. License
+
+Open-source for learning, prototyping, and competition use.
