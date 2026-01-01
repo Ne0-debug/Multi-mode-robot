@@ -1,4 +1,4 @@
-# Multi-Mode Arduino Robot Controller
+# Multi-Mode Arduino Robot 
 
 This project implements a **multi-mode robotic control system** using Arduino, supporting manual control, line following, obstacle avoidance, hybrid navigation, trigger-based motion, gyro-stabilized driving, record/playback of paths, and **voice control via Google Text-to-Speech (G-TTS)** using a mobile device.
 
